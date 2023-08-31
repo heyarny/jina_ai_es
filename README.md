@@ -2,6 +2,10 @@
 
 This project should demonstrate the use of Jina.ai (DocArray, Flows, Executors) with BERT (embeddings) and Elasticsearch as vector database.
 
+Vector search illustration from Elastic:
+![Vector Search](vector-search-diagram-cropped-white-space.png)
+(Origin: https://www.elastic.co/what-is/vector-search)
+
 # How to
 
 Open project in VSCode and switch to dev container when prompted.
