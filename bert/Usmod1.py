@@ -1,5 +1,5 @@
 import tensorflow_hub as hub
-#import tensorflow_text as text
+import tensorflow_text as text
 
 preprocess_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3'
 encoder_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/4'

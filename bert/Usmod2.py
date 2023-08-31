@@ -1,12 +1,13 @@
 import tensorflow as tf
 import tensorflow_hub as hub
-#import tensorflow_text as text
+import tensorflow_text as text
 
 import pandas as pd
 from keras.backend import shape
 
-df = pd.read_csv("/workspace/data/spamtrain.csv")
+df = pd.read_csv("/workspace/data/train.csv")
 df.head(5)
+df.columns
 
 #basic analysis
 df.groupby('label').describe()
@@ -48,6 +49,7 @@ X_train, X_test, y_train, y_test = train_test_split(df_balanced['label'], df_bal
 #Note** use startify so that in train and test sample, the distribution of categories is equal.
 
 X_train.head
+y_train.head
 df_balanced.head()
 preprocess_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3'
 encoder_url = 'https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/4'
@@ -67,8 +69,8 @@ get_sentence_embedding([
 
 #test bert encoder to get embeddings for some random words
 e = get_sentence_embedding([
-    "banana",
-    "grapes",
+    "finger",
+    "mars",
     "mango",
     "jeff bezos",
     "elon musk",
@@ -81,6 +83,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 # if cosine simlarity is close to 1 that means vectors are similar
 
 cosine_similarity([e[0]], [e[1]])
+cosine_similarity([e[1]], [e[2]])
+cosine_similarity([e[0]], [e[3]])
 
 #similarly
 cosine_similarity([e[0]], [e[3]])
@@ -116,7 +120,7 @@ model.compile(optimizer='adam',
               loss='binary_crossentropy',
                 metrics = METRICS)
 
-model.fit(X_train, y_train, epochs=10)
+model.fit(X_train, y_train, epochs=2)
 # The number of epochs is a hyperparameter that defines the number times that the learning algorithm will work through the entire training dataset.
 
 model.evaluate(X_test, y_test)
@@ -149,7 +153,11 @@ reviews = [
     'You are awarded a SiPix Digital Camera! call 00191928267 from landline. Delivery within 27days.',
     'it is 80488. Your 500 free text messages are valid until 31 December 2005',
     'Hey peter, are you coming to office today',
-    "why don't you wait for 1 week to check your salary"]
+    "why don't you wait for 1 week to check your salary",
+    "How are you doing?",
+    "Buy Bitcoin here!",
+    "Gewinne hier eine million euro!",
+    "328428348235233333"]
 
 model.predict(reviews)
 # Look at values and see if its more than 0.5 to be categorized as SPAM.
